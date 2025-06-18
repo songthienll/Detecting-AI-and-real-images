@@ -1,0 +1,7 @@
+torch
+transformers
+streamlit
+opencv-python
+numpy
+pandas
+torchvision
