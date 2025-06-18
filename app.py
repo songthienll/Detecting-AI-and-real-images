@@ -39,36 +39,53 @@ model_choice = st.selectbox("Choose a model", ["MobileViT", "ConvNext", "SwinT"]
 
 # Load models with caching
 @st.cache_resource
-def load_mobilevit():
-    try:
-        processor = AutoImageProcessor.from_pretrained("songthienll/mobilevit_ai_real_classifier")
-        model = AutoModelForImageClassification.from_pretrained("songthienll/mobilevit_ai_real_classifier").to(device)
-        return processor, model
-    except Exception as e:
-        st.error(f"Error loading MobileViT model: {str(e)}")
-        return None, None
-
-# Load the ConvNext model
-@st.cache_resource
 def load_convnext():
     try:
         # Initialize the ConvNext Tiny model (without pretrained weights)
         model = models.convnext_tiny(weights=None)
         
-        # Modify the classifier to match your custom model (e.g., 2 output classes)
+        # Modify the classifier to match your custom model (2 output classes)
         model.classifier[2] = torch.nn.Linear(model.classifier[2].in_features, 2)
         
         # Load the state dictionary from Hugging Face
         state_dict_url = "https://huggingface.co/songthienll/convnext-t-model/resolve/main/best_model_convnext.pt"
-        state_dict = torch.hub.load_state_dict_from_url(state_dict_url, map_location=device)
+        state_dict = torch.hub.load_state_dict_from_url(state_dict_url, map_location=device, weights_only=True)
         
-        # Apply the state dictionary to the model
+        # Remove "module." prefix if present (from DataParallel)
+        if list(state_dict.keys())[0].startswith("module."):
+            state_dict = {k.replace("module.", ""): v for k, v in state_dict.items()}
+        # Load the state dictionary into the model
         model.load_state_dict(state_dict)
         model.to(device)
         model.eval()
         return model
     except Exception as e:
         st.error(f"Error loading ConvNext model: {str(e)}")
+        return None
+
+@st.cache_resource
+def load_swint():
+    try:
+        # Initialize the Swin-T model (without pretrained weights)
+        model = models.swin_t(weights=None)
+        
+        # Modify the head to match your custom model (2 output classes)
+        model.head = torch.nn.Linear(model.head.in_features, 2)
+        
+        # Load the state dictionary from Hugging Face
+        state_dict_url = "https://huggingface.co/songthienll/swint-t-model/resolve/main/best_model_swint.pt"
+        state_dict = torch.hub.load_state_dict_from_url(state_dict_url, map_location=device, weights_only=True)
+        
+        # Remove "module." prefix if present (from DataParallel)
+        if list(state_dict.keys())[0].startswith("module."):
+            state_dict = {k.replace("module.", ""): v for k, v in state_dict.items()}
+        # Load the state dictionary into the model
+        model.load_state_dict(state_dict)
+        model.to(device)
+        model.eval()
+        return model
+    except Exception as e:
+        st.error(f"Error loading SwinT model: {str(e)}")
         return None
 
 @st.cache_resource
