@@ -51,13 +51,8 @@ def load_mobilevit():
 @st.cache_resource
 def load_convnext():
     try:
-        model = models.convnext_tiny(weights=None)
-        model.classifier[2] = torch.nn.Linear(model.classifier[2].in_features, 2)
-        state_dict = torch.load(r"D:\DAT301m\project1\best_model_convnext.pt", map_location=device, weights_only=True)
-        if list(state_dict.keys())[0].startswith("module."):
-            state_dict = {k.replace("module.", ""): v for k, v in state_dict.items()}
-        model.load_state_dict(state_dict)
-        model.to(device)
+        model = AutoModelForImageClassification.from_pretrained("songthienll/convnext-t-model")
+        model.to(device)  
         model.eval()
         return model
     except Exception as e:
@@ -67,19 +62,14 @@ def load_convnext():
 @st.cache_resource
 def load_swint():
     try:
-        model = models.swin_t(weights=None)
-        model.head = torch.nn.Linear(model.head.in_features, 2)
-        state_dict = torch.load(r"D:\DAT301m\project1\best_model_swint.pt", map_location=device, weights_only=True)
-        if list(state_dict.keys())[0].startswith("module."):
-            state_dict = {k.replace("module.", ""): v for k, v in state_dict.items()}
-        model.load_state_dict(state_dict)
+        model = AutoModelForImageClassification.from_pretrained("songthienll/swint-t-model")
         model.to(device)
         model.eval()
         return model
     except Exception as e:
         st.error(f"Error loading SwinT model: {str(e)}")
         return None
-
+        
 # Define preprocessing for ConvNext and SwinT
 def get_preprocess():
     return transforms.Compose([
