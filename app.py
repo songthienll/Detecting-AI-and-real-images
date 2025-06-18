@@ -312,7 +312,7 @@ if uploaded_file is not None:
                     os.unlink(output_file.name)
                 return None, None, None, None
                     
-        output_video_bytes, predictions, total_inference_time, num_frames_processed = process_video(video_path, predict_func, sampling_rate=1)
+        output_video_bytes, predictions, total_inference_time, num_frames_processed = process_video(video_path, predict_func, sampling_rate=5)
 
         if output_video_bytes:
             st.write("### Output Video with Predictions")
