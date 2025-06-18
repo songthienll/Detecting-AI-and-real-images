@@ -6,7 +6,7 @@ This project focuses on detecting AI-generated images versus real images using a
 
 ## Demo
 Check out the live demo at https://detecting-ai-images.streamlit.app/  
-![me(https://github.com/songthienll/Detecting-AI-and-real-images/blob/main/demo.gif)
+![me](https://github.com/songthienll/Detecting-AI-and-real-images/blob/main/demo.gif)
 
 ## Installation
 
