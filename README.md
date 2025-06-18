@@ -1,11 +1,10 @@
 # Detecting-AI-and-real-images
 
-## Demo
-Check out the live demo at: https://detecting-ai-images.streamlit.app/  
-![me](https://github.com/songthienll/Detecting-AI-and-real-images/blob/main/demo.gif)
-
 ## Introduction
 This project focuses on detecting AI-generated images versus real images using advanced deep learning models such as Mobile-ViT-S, Swin-T, and ConvNeXt-T. The demo application is built with Streamlit, allowing users to upload images or videos to check their authenticity based on trained models.
+
+## Check out the live demo at: https://detecting-ai-images.streamlit.app/  
+![me](https://github.com/songthienll/Detecting-AI-and-real-images/blob/main/demo.gif)
 
 ## Installation
 To run the project, you need the following libraries:
