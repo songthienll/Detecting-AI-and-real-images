@@ -1,7 +1,7 @@
 # Detecting-AI-and-real-images
 
 ## Demo
-Check out the live demo at https://detecting-ai-images.streamlit.app/  
+Check out the live demo at: https://detecting-ai-images.streamlit.app/  
 ![me](https://github.com/songthienll/Detecting-AI-and-real-images/blob/main/demo.gif)
 
 ## Introduction
