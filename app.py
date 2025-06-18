@@ -73,7 +73,7 @@ def load_swint():
         model.head = torch.nn.Linear(model.head.in_features, 2)
         
         # Load the state dictionary from Hugging Face
-        state_dict_url = "https://huggingface.co/songthienll/swint-t-model/resolve/main/best_model_swint.pt"
+        state_dict_url = "https://huggingface.co/songthienll/swint-model/resolve/main/best_model_swint.pt"
         state_dict = torch.hub.load_state_dict_from_url(state_dict_url, map_location=device, weights_only=True)
         
         # Remove "module." prefix if present (from DataParallel)
