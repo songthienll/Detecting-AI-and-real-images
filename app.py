@@ -9,6 +9,7 @@ from torchvision import transforms
 import tempfile
 import os
 import time
+import subprocess
 
 # Initialize session state for storing previous predictions
 if 'last_prediction' not in st.session_state:
@@ -209,24 +210,19 @@ if uploaded_file is not None:
             st.write(f"Total frames: {frame_count}, FPS: {fps:.2f}, Resolution: {width}x{height}")
 
             # Create a temporary file for the output video
-            temp_file = tempfile.NamedTemporaryFile(delete=False, suffix=".mp4")
+            temp_file = tempfile.NamedTemporaryFile(delete=False, suffix=".avi")
             temp_file.close()
+            output_file = tempfile.NamedTemporaryFile(delete=False, suffix=".mp4")
+            output_file.close()
 
-            fourcc = cv2.VideoWriter_fourcc(*"avc1")
+            fourcc = cv2.VideoWriter_fourcc(*"MJPG")
             out = cv2.VideoWriter(temp_file.name, fourcc, fps, (width, height))
 
             if not out.isOpened():
-                st.warning("Codec failed, trying alternative codecs...")
-                for codec in ["XVID", "MJPG", "mp4v"]:
-                    fourcc = cv2.VideoWriter_fourcc(*codec)
-                    out = cv2.VideoWriter(temp_file.name, fourcc, fps, (width, height))
-                    if out.isOpened():
-                        st.info(f"Using {codec} codec")
-                        break
-
-            if not out.isOpened():
-                st.error("Error: Could not initialize video writer with any codec.")
+                st.error("Error: Could not initialize video writer with MJPG codec.")
                 cap.release()
+                if os.path.exists(temp_file.name):
+                    os.unlink(temp_file.name)
                 return None, None, None, None
 
             predictions = []
@@ -273,17 +269,31 @@ if uploaded_file is not None:
             cap.release()
             out.release()
 
+            # Convert MJPG AVI to H.264 MP4 using FFmpeg
             try:
-                with open(temp_file.name, "rb") as f:
+                subprocess.run(['ffmpeg', '-y', '-i', temp_file.name, '-vcodec', 'libx264', '-acodec', 'aac', output_file.name], check=True)
+            except subprocess.CalledProcessError as e:
+                st.error(f"Error converting video to MP4: {str(e)}")
+                if os.path.exists(temp_file.name):
+                    os.unlink(temp_file.name)
+                if os.path.exists(output_file.name):
+                    os.unlink(output_file.name)
+                return None, None, None, None
+
+            try:
+                with open(output_file.name, "rb") as f:
                     video_bytes = f.read()
                 os.unlink(temp_file.name)
+                os.unlink(output_file.name)
                 return video_bytes, predictions, total_inference_time, sampled_frame_count
             except Exception as e:
                 st.error(f"Error reading processed video: {str(e)}")
                 if os.path.exists(temp_file.name):
                     os.unlink(temp_file.name)
+                if os.path.exists(output_file.name):
+                    os.unlink(output_file.name)
                 return None, None, None, None
-
+                    
         output_video_bytes, predictions, total_inference_time, num_frames_processed = process_video(video_path, predict_func, sampling_rate=5)
 
         if output_video_bytes:
