@@ -199,7 +199,7 @@ if uploaded_file is not None:
         image = Image.open(uploaded_file)
         if image.mode != "RGB":
             image = image.convert("RGB")
-        st.image(image, caption="Uploaded Image", use_column_width=True)
+        st.image(image, caption="Uploaded Image", use_container_width=True)
         label, confidence, inference_time = predict_func(image)
         # Store prediction in session state
         st.session_state.last_prediction = (label, confidence, inference_time)
