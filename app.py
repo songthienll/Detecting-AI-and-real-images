@@ -212,11 +212,11 @@ if uploaded_file is not None:
             temp_file = tempfile.NamedTemporaryFile(delete=False, suffix=".mp4")
             temp_file.close()
 
-            fourcc = cv2.VideoWriter_fourcc(*"H264")
+            fourcc = cv2.VideoWriter_fourcc(*"avc1")
             out = cv2.VideoWriter(temp_file.name, fourcc, fps, (width, height))
 
             if not out.isOpened():
-                st.warning("H264 codec failed, trying alternative codecs...")
+                st.warning("Codec failed, trying alternative codecs...")
                 for codec in ["XVID", "MJPG", "mp4v"]:
                     fourcc = cv2.VideoWriter_fourcc(*codec)
                     out = cv2.VideoWriter(temp_file.name, fourcc, fps, (width, height))
