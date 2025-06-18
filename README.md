@@ -44,12 +44,12 @@ The project utilizes three main models, each optimized for high-performance comp
    - Available on Hugging Face: https://huggingface.co/songthienll/mobilevit_ai_real_classifier
 2. **Swin-T**:  
    - Swin-Tiny (a variant of the Swin Transformer) adopts a hierarchical architecture and multi-resolution feature processing, making it a highly versatile and powerful model for various computer vision tasks. It uses a sliding window-based attention mechanism that allows for efficient scaling on large image sizes.
-   - Parameters: ~28 million.  
+   - Parameters: ~28.8 million.  
    - Available on Hugging Face: https://huggingface.co/songthienll/swint-model
 
 3. **ConvNeXt-T**:  
    - ConvNeXt-Tiny is a modernized Convolutional Neural Network (CNN) inspired by the advancements in Vision Transformers. It provides state-of-the-art performance while retaining the simplicity and efficiency of traditional CNNs.
-   - Parameters: ~29 million.  
+   - Parameters: ~28.6 million.  
    - Available on Hugging Face: https://huggingface.co/songthienll/convnext-t-model
 
 These models were fine-tuned on a dataset of real and AI-generated images, with inputs normalized to 224x224 pixels.
