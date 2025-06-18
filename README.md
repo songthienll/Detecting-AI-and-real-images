@@ -1,15 +1,13 @@
 # Detecting-AI-and-real-images
 
-## Introduction
-
-This project focuses on detecting AI-generated images versus real images using advanced deep learning models such as Mobile-ViT-S, Swin-T, and ConvNeXt-T. The demo application is built with Streamlit, allowing users to upload images or videos to check their authenticity based on trained models.
-
 ## Demo
 Check out the live demo at https://detecting-ai-images.streamlit.app/  
 ![me](https://github.com/songthienll/Detecting-AI-and-real-images/blob/main/demo.gif)
 
-## Installation
+## Introduction
+This project focuses on detecting AI-generated images versus real images using advanced deep learning models such as Mobile-ViT-S, Swin-T, and ConvNeXt-T. The demo application is built with Streamlit, allowing users to upload images or videos to check their authenticity based on trained models.
 
+## Installation
 To run the project, you need the following libraries:
 
 - Python 3.8+
@@ -59,4 +57,4 @@ These models were fine-tuned on a dataset of real and AI-generated images, with 
 
 ## Dataset
 
-The dataset consists of real images and AI-generated images (e.g., from diffusion models). Due to its large size, it is not included in the repository. You can download a sample dataset from [this link](https://www.kaggle.com/datasets/songthien/ai-and-real-images) or create a similar dataset yourself.
+The dataset consists of real images and AI-generated images (e.g., from diffusion models). Due to its large size, it is not included in the repository. You can download my dataset from [this link](https://www.kaggle.com/datasets/songthien/ai-and-real-images) or create a similar dataset yourself.
