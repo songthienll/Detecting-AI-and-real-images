@@ -216,7 +216,7 @@ if uploaded_file is not None:
             video_path = temp_file.name
 
         # Process video
-        def process_video(video_path, predict_func, sampling_rate=5):
+        def process_video(video_path, predict_func, sampling_rate=1):
             cap = cv2.VideoCapture(video_path)
             if not cap.isOpened():
                 st.error("Error: Could not open video. Ensure the file is a valid MP4, AVI, or MOV.")
